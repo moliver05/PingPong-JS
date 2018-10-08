@@ -10,8 +10,12 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'src')
   },
+  devtool: 'eval-source-map',
+  devServer: {
+    contentBase: './src'
+  },
   plugins: [
-    new UglifyJsPlugin(),
+    new UglifyJsPlugin({sourceMap: true }),
     new CleanWebpackPlugin(['dist']),  
     new HtmlWebpackPlugin({
       title: 'Ping Pong',
@@ -27,7 +31,12 @@ module.exports = {
           'style-loader',
           'css-loader'
         ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader"
       }
     ]
   }
-};
+}; 
